@@ -14,3 +14,20 @@ Kaggle Churn Prediction project
 <strong>data.npz</strong> Stores the numpy arrays X_train and Y_train
 
 <strong>load_data.py</strong> Extracts X_train and Y_train from data.npz
+
+<h3>Description of the numpy arrays</h3>
+<strong>X_train</strong>:
+
+Shape: (780123, 5)
+Columns:
+  0: num_25
+  1: num_50
+  2: num_75
+  3: num_985
+  4: num_100
+
+<strong>Y_train</strong>:
+
+Shape: (780123, 1)
+Each entry is a 0 or 1 to represent that either a churn or no churn has occured.
+
