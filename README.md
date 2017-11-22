@@ -22,15 +22,15 @@ Shape: (780123, 5)
 
 Columns:
 
-  0: num_25
+  <strong>0:</strong> num_25
   
-  1: num_50
+  <strong>1:</strong> num_50
   
-  2: num_75
+  <strong>2:</strong> num_75
   
-  3: num_985
+  <strong>3:</strong> num_985
   
-  4: num_100
+  <strong>4:</strong> num_100
 
 <strong>Y_train</strong>:
 
