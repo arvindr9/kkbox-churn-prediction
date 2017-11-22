@@ -1,7 +1,7 @@
 # kkbox-churn-prediction
 Kaggle Churn Prediction project
 
-<h1>Instructions</h1>
+<h2>Instructions</h2>
 
 <strong>1.</strong> Download data.npz and load_data.py
 
