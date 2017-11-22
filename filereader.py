@@ -61,7 +61,7 @@ indices = np.array([i for i in range(len(X_train))])
 np.random.shuffle(indices)
 X_train = X_train[indices]
 Y_train = Y_train[indices]
-#Y_train = np.reshape(Y_train, (Y_train.shape[0], 1))
+Y_train = np.reshape(Y_train, (Y_train.shape[0], 1))
 print(X_train)
 print(Y_train)
 print(X_train.shape) #(98642, 5)
