@@ -1,9 +1,10 @@
 import csv
 import numpy as np
+from tempfile import TemporaryFile as tef
 churn_dat = []
 log_dat = []
-churn_limit = 100000
-log_limit = 100000
+churn_limit = 992900
+log_limit = 10000000
 msno_to_churn = {}
 churn_to_msno = {}
 msno_to_logs = {}
@@ -60,7 +61,19 @@ indices = np.array([i for i in range(len(X_train))])
 np.random.shuffle(indices)
 X_train = X_train[indices]
 Y_train = Y_train[indices]
+#Y_train = np.reshape(Y_train, (Y_train.shape[0], 1))
 print(X_train)
 print(Y_train)
-print(X_train.shape)
-print(Y_train.shape)
+print(X_train.shape) #(98642, 5)
+print(Y_train.shape) #(98642, 1)
+#with open('processed.csv', 'w') as csvfile:
+#    writer = csv.writer(csvfile)
+#    for i in range(X_train.shape[0]):
+#        line = ''
+#        for j in range(5):
+#            line += str(X_train[i][j])
+#        line += str(Y_train[i])
+#        writer.writerow(line)
+
+np.savez("data.npz", X_train, Y_train)
+#np.savetxt('data.npz', X_train, delimiter=',')
