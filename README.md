@@ -19,11 +19,17 @@ Kaggle Churn Prediction project
 <strong>X_train</strong>:
 
 Shape: (780123, 5)
+
 Columns:
+
   0: num_25
+  
   1: num_50
+  
   2: num_75
+  
   3: num_985
+  
   4: num_100
 
 <strong>Y_train</strong>:
