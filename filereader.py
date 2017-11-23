@@ -3,15 +3,31 @@ import numpy as np
 from tempfile import TemporaryFile as tef
 churn_dat = []
 log_dat = []
-churn_limit = 992900
-log_limit = 10000000
+churn_limit = 9929000
+log_limit = 8000000
 msno_to_churn = {}
 churn_to_msno = {}
 msno_to_logs = {}
 logs_to_msno = {}
 logs_to_churn = {}
+msno_to_age = {}
+age_to_msno = {}
 msnos = []
-
+with open('datasets/members_v3.csv/members_v3.csv') as csvfile:
+    reader = csv.DictReader(csvfile, fieldnames = ["msno", "city", "bd", "gender", "registered_via", 'registration_init_time'])
+    for row in reader:
+        msno = row["msno"]
+        city = row['city']
+        age = row['bd']
+        gender = row['gender']
+        registered_via = row['registered_via']
+        registration_init_time = row['registration_init_time']
+        try:
+            if 0 < float(age) and float(age) < 100:
+                msno_to_age[msno] = age
+                age_to_msno[age] = msno
+        except ValueError:
+            pass
 with open('datasets/train.csv/train.csv', encoding="utf-8") as csvfile:
     reader = csv.DictReader(csvfile, fieldnames = ["msno", "is_churn"])
     count = 0
@@ -26,9 +42,10 @@ with open('datasets/train.csv/train.csv', encoding="utf-8") as csvfile:
         if count == churn_limit:
             break
 #print(churn_dat[:10])
+
 with open('datasets/user_logs.csv/user_logs.csv', encoding="utf-8") as csvfile:
     reader = csv.DictReader(csvfile,
-        fieldnames = ["msno", "date", "num_25","num_50", "num_75", "num_985", "num_100", "num_unq", "total_secs"])
+        fieldnames = ["msno", "date", "num_25", "num_50", "num_75", "num_985", "num_100", "num_unq", "total_secs"])
     count = 0
     for row in reader:
         msno = row["msno"]
@@ -37,7 +54,13 @@ with open('datasets/user_logs.csv/user_logs.csv', encoding="utf-8") as csvfile:
         num_75 = row["num_75"]
         num_985 = row["num_985"]
         num_100 = row["num_100"]
-        apnd = [msno, num_25, num_50, num_75, num_985, num_100]
+        num_unq = row["num_unq"]
+        try:
+            age = msno_to_age[msno]
+        except KeyError:
+            continue
+        total_secs = row["total_secs"]
+        apnd = [msno, num_25, num_50, num_75, num_985, num_100, num_unq, total_secs, age]
         msno_to_logs[msno] = apnd[1:]
         log_dat.append(apnd)
         count += 1
@@ -53,8 +76,8 @@ for i in msnos:
         Y_train_list.append(churn)
     except KeyError:
         pass
-X_train_list = [list(map(int, x)) for x in X_train_list[1:]]
-Y_train_list = list(map(int, Y_train_list[1:]))
+X_train_list = [list(map(float, x)) for x in X_train_list[1:]]
+Y_train_list = list(map(float, Y_train_list[1:]))
 X_train = np.asarray(X_train_list)
 Y_train = np.asarray(Y_train_list)
 indices = np.array([i for i in range(len(X_train))])
