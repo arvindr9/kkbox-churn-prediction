@@ -4,7 +4,7 @@ from tempfile import TemporaryFile as tef
 churn_dat = []
 log_dat = []
 churn_limit = 992900
-log_limit = 10000000
+log_limit = 1000000
 msno_to_churn = {}
 churn_to_msno = {}
 msno_to_logs = {}
@@ -37,7 +37,9 @@ with open('datasets/user_logs.csv/user_logs.csv', encoding="utf-8") as csvfile:
         num_75 = row["num_75"]
         num_985 = row["num_985"]
         num_100 = row["num_100"]
-        apnd = [msno, num_25, num_50, num_75, num_985, num_100]
+        num_unq = row["num_unq"]
+        total_secs = row["total_secs"]
+        apnd = [msno, num_25, num_50, num_75, num_985, num_100, num_unq, total_secs]
         msno_to_logs[msno] = apnd[1:]
         log_dat.append(apnd)
         count += 1
@@ -53,8 +55,8 @@ for i in msnos:
         Y_train_list.append(churn)
     except KeyError:
         pass
-X_train_list = [list(map(int, x)) for x in X_train_list[1:]]
-Y_train_list = list(map(int, Y_train_list[1:]))
+X_train_list = [list(map(float, x)) for x in X_train_list[1:]]
+Y_train_list = list(map(float, Y_train_list[1:]))
 X_train = np.asarray(X_train_list)
 Y_train = np.asarray(Y_train_list)
 indices = np.array([i for i in range(len(X_train))])
